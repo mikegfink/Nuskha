@@ -272,7 +272,9 @@ function buildSigmaGraph(nuskhaExpression) {
         nodeArray.push({
             "id": node.vid.toString(),
             "label": node.label,
-            "x": node.time / 4
+            "x": node.time / 4,
+            "y" : Math.random(),
+            "size": 0.1
         });
 
         // Building 'Ingredient Flow' edges
@@ -295,6 +297,6 @@ function buildSigmaGraph(nuskhaExpression) {
 
     sigmaJSON["nodes"] = nodeArray;
     sigmaJSON["edges"] = edgeArray;
-    
+
     return sigmaJSON;
 }

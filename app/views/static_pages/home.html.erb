@@ -17,16 +17,6 @@
         }
     });
 
-    // Generating random y cordinates. TODO: Eliminate duplication
-    nodes = [];
-    nodes = s.graph.nodes();
-    len = nodes.length;
-    for (i = 0; i < len; i++) {
-        nodes[i].y = Math.random();
-        nodes[i].size = s.graph.degree(nodes[i].id);
-    }
-
-    s.refresh();
     s.startForceAtlas2();
     s.start
 </script>
