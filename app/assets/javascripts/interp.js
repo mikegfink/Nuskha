@@ -1,5 +1,4 @@
-
-    var nuskhaExpr1 = {
+var nuskhaExpr1 = {
     "recipe": {
         "title": "Braised Short Ribs",
         "style": "Szechuan"
@@ -252,60 +251,6 @@
             "label": "remove",
             "ingr": [
                 23
-            ]
-        }
-    ]
-};
-
-
-var nuskhaExpr2 = {
-    "recipe": {
-        "title": "Carrots"
-    },
-    "graph": [
-        {
-            "id": 1,
-            "time": 0,
-            "label": "carrot",
-            "ingr": [],
-            "constraints": [
-                {
-                    "amount": "1"
-                }
-            ]
-        },
-        {
-            "id": 2,
-            "time": 0,
-            "label": "chop",
-            "ingr": [
-                1
-            ],
-            "constraints": [
-                {
-                    "utensil": "knife"
-                }
-            ]
-        },
-        {
-            "id": 3,
-            "time": 0,
-            "label": "put",
-            "ingr": [
-                1
-            ],
-            "constraints": [
-                {
-                    "location": "plate"
-                }
-            ]
-        },
-        {
-            "id": 4,
-            "time": 0,
-            "label": "serve",
-            "ingr": [
-                3
             ]
         }
     ]
