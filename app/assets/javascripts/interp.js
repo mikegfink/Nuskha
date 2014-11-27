@@ -150,7 +150,6 @@ var nuskhaExpression = {
             "time": 4,
             "label": "heat",
             "ingr": [
-                13,
                 14
             ],
             "constraints": {
@@ -185,9 +184,7 @@ var nuskhaExpression = {
             "vid": 18,
             "time": 0,
             "label": "oil",
-            "ingr": [
-                18
-            ],
+            "ingr": [],
             "constraints": {
                 "amount": "1 tablespoon"
             }
@@ -259,24 +256,36 @@ var nuskhaExpression = {
     ]
 };
 
+
 function buildSigmaGraph(nuskhaExpression) {
     var nuskhaGraph = nuskhaExpression["graph"];
     var sigmaJSON = {};
     var nodeArray = [];
     var edgeArray = [];
     var nextEdgeId = 0;
+    var Y =0;
 
     for (var i = 0; i < nuskhaGraph.length; i++) {
-
         var node = nuskhaGraph[i];
+
+        if (node.time === 0) {
+             nodeArray.push({
+            "id": node.vid.toString(),
+            "label": node.label,
+            "x": 5,
+            "y" : Y,
+            "size": 2
+        });
+             Y++;
+        } else {
         nodeArray.push({
             "id": node.vid.toString(),
             "label": node.label,
-            "x": node.time / 4,
-            "y" : Math.random(),
-            "size": 0.1
+            "x": node.time+5,
+            "y" : 0,
+            "size": 2
         });
-
+    }
         // Building 'Ingredient Flow' edges
         for (var j = 0; j < node.ingr.length; j++) {
             var edge = node.ingr[j];
@@ -289,6 +298,7 @@ function buildSigmaGraph(nuskhaExpression) {
             });
             nextEdgeId++;
         }
+
     }
     // Building 'Time Flow' edges
     for (var k = 0; k < nuskhaGraph.length; k++) {
@@ -299,4 +309,12 @@ function buildSigmaGraph(nuskhaExpression) {
     sigmaJSON["edges"] = edgeArray;
 
     return sigmaJSON;
+}
+
+function averageY(node) {
+    Yarray = [];
+    ingredients
+    for (var i = 0; i < node.ingr.length; i++) {
+        
+    };
 }
