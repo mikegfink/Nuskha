@@ -1,18 +1,18 @@
-var nuskhaExpression = {
+var nuskhaExpr1 = {
     "recipe": {
         "title": "Braised Short Ribs",
         "style": "Szechuan"
     },
     "graph": [
         {
-            "vid": 1,
+            "id": 1,
             "time": 0,
             "label": "spare rib",
             "ingr": [],
             "description": "pork (preferred) or beef"
         },
         {
-            "vid": 2,
+            "id": 2,
             "time": 1,
             "label": "cut",
             "ingr": [
@@ -25,7 +25,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 3,
+            "id": 3,
             "time": 0,
             "label": "black pepper",
             "ingr": [],
@@ -34,7 +34,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 4,
+            "id": 4,
             "time": 0,
             "label": "soy sauce",
             "ingr": [],
@@ -43,7 +43,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 5,
+            "id": 5,
             "time": 0,
             "label": "sugar",
             "ingr": [],
@@ -52,7 +52,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 6,
+            "id": 6,
             "time": 0,
             "label": "cornstarch",
             "ingr": [],
@@ -61,7 +61,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 7,
+            "id": 7,
             "time": 2,
             "label": "marinate",
             "ingr": [
@@ -77,7 +77,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 8,
+            "id": 8,
             "time": 0,
             "label": "black pepper",
             "ingr": [],
@@ -86,7 +86,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 9,
+            "id": 9,
             "time": 0,
             "label": "honey",
             "ingr": [],
@@ -95,7 +95,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 10,
+            "id": 10,
             "time": 0,
             "label": "soy sauce",
             "ingr": [],
@@ -104,7 +104,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 11,
+            "id": 11,
             "time": 0,
             "label": "cornstarch",
             "ingr": [],
@@ -113,7 +113,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 12,
+            "id": 12,
             "time": 0,
             "label": "water",
             "ingr": [],
@@ -122,7 +122,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 13,
+            "id": 13,
             "time": 3,
             "label": "mix",
             "ingr": [
@@ -137,7 +137,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 14,
+            "id": 14,
             "time": 0,
             "label": "oil",
             "ingr": [],
@@ -146,7 +146,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 15,
+            "id": 15,
             "time": 4,
             "label": "heat",
             "ingr": [
@@ -158,7 +158,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 16,
+            "id": 16,
             "time": 5,
             "label": "deep-fry",
             "ingr": [
@@ -170,7 +170,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 17,
+            "id": 17,
             "time": 6,
             "label": "remove",
             "ingr": [
@@ -181,7 +181,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 18,
+            "id": 18,
             "time": 0,
             "label": "oil",
             "ingr": [],
@@ -190,7 +190,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 19,
+            "id": 19,
             "time": 7,
             "label": "heat",
             "ingr": [
@@ -202,7 +202,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 20,
+            "id": 20,
             "time": 8,
             "label": "stir",
             "ingr": [
@@ -215,7 +215,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 21,
+            "id": 21,
             "time": 9,
             "label": "boil",
             "ingr": [
@@ -223,7 +223,7 @@ var nuskhaExpression = {
             ]
         },
         {
-            "vid": 22,
+            "id": 22,
             "time": 9,
             "label": "stir",
             "ingr": [
@@ -235,7 +235,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 23,
+            "id": 23,
             "time": 10,
             "label": "simmer",
             "ingr": [
@@ -246,7 +246,7 @@ var nuskhaExpression = {
             }
         },
         {
-            "vid": 24,
+            "id": 24,
             "time": 11,
             "label": "remove",
             "ingr": [
@@ -279,7 +279,7 @@ function buildSigmaGraph(nuskhaExpression) {
              Y++;
         } else {
         nodeArray.push({
-            "id": node.vid.toString(),
+            "id": node.id.toString(),
             "label": node.label,
             "x": node.time+5,
             "y" : 0,
@@ -292,7 +292,7 @@ function buildSigmaGraph(nuskhaExpression) {
             edgeArray.push({
                 "id": nextEdgeId.toString(),
                 "label": 'Edge ' + j,
-                "target": node.vid.toString(),
+                "target": node.id.toString(),
                 "source": node.ingr[j].toString(),
                 "type": "arrow"
             });
@@ -301,9 +301,9 @@ function buildSigmaGraph(nuskhaExpression) {
 
     }
     // Building 'Time Flow' edges
-    for (var k = 0; k < nuskhaGraph.length; k++) {
-
-    }
+    //for (var k = 0; k < nuskhaGraph.length; k++) {
+    //
+    //}
 
     sigmaJSON["nodes"] = nodeArray;
     sigmaJSON["edges"] = edgeArray;
