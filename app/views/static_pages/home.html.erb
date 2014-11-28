@@ -8,7 +8,7 @@
             defaultNodeColor = settings('defaultNodeColor'),
             defaultEdgeColor = settings('defaultEdgeColor');
 
-        context.strokeStyle = target.color;
+        context.strokeStyle = source.color;
         context.lineWidth = 9;
         context.beginPath();
         context.moveTo(
@@ -36,7 +36,7 @@
         context.fillStyle = "black";
         context.lineWidth = size;
         context.textAlign = 'center';
-        context.fillText(node.label, nodeX-9, nodeY-15);
+        context.fillText(node.label, nodeX-8, nodeY+4);
 
         textWidth = context.measureText(node.label).width
         node.labelWidth = textWidth; 
