@@ -46,7 +46,7 @@ function buildSigmaGraph(nuskhaExpression) {
             nodeArray.push({
                 id: node.id.toString(),
                 label: node.label,
-                x: node.time*2,
+                x: node.time,
                 y: yCoordinates[node.ingr[0]],
                 size: 5,
                 color: colors[Math.floor(Math.random() * colors.length)],

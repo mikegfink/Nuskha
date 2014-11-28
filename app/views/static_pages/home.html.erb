@@ -36,11 +36,11 @@
         context.fillStyle = "black";
         context.lineWidth = size;
         context.textAlign = 'center';
-        context.fillText(node.label, nodeX, nodeY-15);
-
+        context.fillText(node.label, nodeX, nodeY-15); // TODO: Add more fillText lines with constraints
         textWidth = context.measureText(node.label).width
         node.labelWidth = textWidth; 
     };
+
 
     sigma.canvas.nodes.square = function(node, context, settings) {
         var prefix = settings('prefix') || '',
@@ -59,7 +59,7 @@
         context.fill();
     };
 
-    // Add colours here
+    // TODO: Add more colours here
     colors = [
         "#6E92A1",
         "#FFBAAA", 
