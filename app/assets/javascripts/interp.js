@@ -9,7 +9,6 @@ function buildSigmaGraph(nuskhaExpression) {
     var nextEdgeId = 0;
     var Y = 0;
     var yCoordinates = {};
-    var references = [];
 
     for (var i = 0; i < nuskhaGraph.length; i++) {
 
