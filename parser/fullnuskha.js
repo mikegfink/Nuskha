@@ -1,6 +1,6 @@
 var ID_NUM = 1;
 var h = new Object;
-var times = new Object;
+var STEP_NUM = 1;
 
 function getId()
 {
@@ -10,7 +10,6 @@ return vid;
 function createIngredient(name,description)
 {
 h[name[0]] = ID_NUM;
-times[ID_NUM] = 0;
 if (name[1] == null) {
 if (description == null) {
 return {"id": getId(), "type": "ingredient", "time": 0, "label": name[0], "ingr": []};
@@ -27,8 +26,7 @@ return {"id": getId(), "type": "ingredient", "time": 0, "label": name[0], "ingr"
 }
 function createAction(ingr,constraints)
 {
-time = getTime(ingr[1]);
-times[ID_NUM] = time;
+time = STEP_NUM++;
 if (constraints == null) {
 return {"id": getId(), "type": "action", "time": time, "label": ingr[0], "ingr": ingr[1]};
 } else {
@@ -38,15 +36,6 @@ return {"id": getId(), "type": "action", "time": time, "label": ingr[0], "ingr":
 function setHash(key)
 {
 h[key] = ID_NUM;
-}
-function getTime(idlist)
-{
-new_time = 0;
-for (i = 0; i < idlist.length; i++) {
-id = idlist[i];
-new_time = Math.max(new_time,times[id]);
-}
-return new_time + 1;
 }
 
 /*
@@ -999,12 +988,12 @@ switch( act )
     break;
     case 1:
     {
-         alert( {"recipe": {"title": vstack[ vstack.length - 3 ] }, "graph": vstack[ vstack.length - 1 ]});
+         alert( JSON.stringify({"recipe": {"title": vstack[ vstack.length - 3 ] }, "graph": vstack[ vstack.length - 1 ]}) );
     }
     break;
     case 2:
     {
-         alert( {"recipe": {"title": vstack[ vstack.length - 6 ], "style": vstack[ vstack.length - 4 ]}, "graph": vstack[ vstack.length - 1 ]} );
+         alert( JSON.stringify({"recipe": {"title": vstack[ vstack.length - 6 ], "style": vstack[ vstack.length - 4 ]}, "graph": vstack[ vstack.length - 1 ]}) );
     }
     break;
     case 3:
@@ -1089,7 +1078,7 @@ switch( act )
     break;
     case 19:
     {
-         rval = [vstack[ vstack.length - 4 ] + " " + vstack[ vstack.length - 3 ] + " from", vstack[ vstack.length - 1 ]];
+         rval = [vstack[ vstack.length - 4 ] + " " + vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]];
     }
     break;
     case 20:
