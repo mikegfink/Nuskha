@@ -1,6 +1,7 @@
 var ID_NUM = 1;
 var h = new Object;
 var STEP_NUM = 1;
+var nuskha_result = new Object;
 
 function getId()
 {
@@ -36,6 +37,11 @@ return {"id": getId(), "type": "action", "time": time, "label": ingr[0], "ingr":
 function setHash(key)
 {
 h[key] = ID_NUM;
+}
+function setNuskha(obj)
+{
+nuskha_result = obj;
+alert(nuskha_result);
 }
 
 /*
@@ -988,12 +994,12 @@ switch( act )
     break;
     case 1:
     {
-         alert( JSON.stringify({"recipe": {"title": vstack[ vstack.length - 3 ] }, "graph": vstack[ vstack.length - 1 ]}) );
+         rval = setNuskha({"recipe": {"title": vstack[ vstack.length - 3 ] }, "graph": vstack[ vstack.length - 1 ]});
     }
     break;
     case 2:
     {
-         alert( JSON.stringify({"recipe": {"title": vstack[ vstack.length - 6 ], "style": vstack[ vstack.length - 4 ]}, "graph": vstack[ vstack.length - 1 ]}) );
+         rval = setNuskha({"recipe": {"title": vstack[ vstack.length - 6 ], "style": vstack[ vstack.length - 4 ]}, "graph": vstack[ vstack.length - 1 ]});
     }
     break;
     case 3:
