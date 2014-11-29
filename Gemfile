@@ -16,7 +16,10 @@ group :production do
   gem 'rails_12factor', '0.0.2'
 end
 # Use SCSS for stylesheets
+gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', '~> 4.0.3'
+gem 'autoprefixer-rails'
+gem 'bootswatch-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
