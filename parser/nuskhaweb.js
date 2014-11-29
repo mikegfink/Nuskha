@@ -1,26 +1,3 @@
-/*
-Should work with this:
-Eggplant Rougail = INGREDIENTS: 2 eggplants, 2 white onions, 2 hot peppers, 4 tsp oil, salt and pepper ; DO: 1. boil eggplants until soft; 2. scoop flesh from 1; 3. discard skin from 2; 4. mash 3; 5. mince white onions; 6. mince hot peppers; 7. mix 5, 6, 4; 8. add oil to 7; 9. add salt and pepper to 8; 10. serve 9
-
-Not sure if this is the correct version of the parser! See note below:
-
-	Default driver template for JS/CC generated parsers for Mozilla/Rhino
-	
-	WARNING: Do not use for parsers that should run as browser-based JavaScript!
-			 Use driver_web.js_ instead!
-	
-	Features:
-	- Parser trace messages
-	- Step-by-step parsing
-	- Integrated panic-mode error recovery
-	- Pseudo-graphical parse tree generation
-	
-	Written 2007 by Jan Max Meyer, J.M.K S.F. Software Technologies
-        Modified 2007 from driver.js_ to support Mozilla/Rhino
-           by Louis P.Santillan <lpsantil@gmail.com>
-	
-	This is in the public domain.
-*/
 
 var ID_NUM = 1;
 var h = new Object;
@@ -67,22 +44,29 @@ function setNuskha(obj)
     nuskha_result = obj;
 }
 
+/*
+	Default template driver for JS/CC generated parsers running as
+	browser-based JavaScript/ECMAScript applications.
+	
+	WARNING: 	This parser template will not run as console and has lesser
+				features for debugging than the console derivates for the
+				various JavaScript platforms.
+	
+	Features:
+	- Parser trace messages
+	- Integrated panic-mode error recovery
+	
+	Written 2007, 2008 by Jan Max Meyer, J.M.K S.F. Software Technologies
+	
+	This is in the public domain.
+*/
 
-var _dbg_withparsetree	= false;
 var _dbg_withtrace		= false;
-var _dbg_withstepbystep	= false;
+var _dbg_string			= new String();
 
 function __dbg_print( text )
 {
-	print( text );
-}
-
-function __dbg_wait()
-{
-   var kbd = new java.io.BufferedReader(
-                new java.io.InputStreamReader( java.lang.System[ "in" ] ) );
-
-   kbd.readLine();
+	_dbg_string += text + "\n";
 }
 
 function __lex( info )
@@ -623,12 +607,6 @@ function __parse( src, err_off, err_la )
 	var 	parseinfo		= new Function( "", "var offset; var src; var att;" );
 	var		info			= new parseinfo();
 	
-	//Visual parse tree generation
-	var 	treenode		= new Function( "", "var sym; var att; var child;" );
-	var		treenodes		= new Array();
-	var		tree			= new Array();
-	var		tmptree			= null;
-
 /* Pop-Table */
 var pop_tab = new Array(
 	new Array( 0/* nuskha' */, 1 ),
@@ -876,7 +854,7 @@ var labels = new Array(
 	vstack.push( 0 );
 	
 	la = __lex( info );
-			
+
 	while( true )
 	{
 		act = 70;
@@ -889,12 +867,6 @@ var labels = new Array(
 			}
 		}
 
-		/*
-		_print( "state " + sstack[sstack.length-1] + " la = " + la + " info.att = >" +
-				info.att + "< act = " + act + " src = >" + info.src.substr( info.offset, 30 ) + "..." + "<" +
-					" sstack = " + sstack.join() );
-		*/
-		
 		if( _dbg_withtrace && sstack.length > 0 )
 		{
 			__dbg_print( "\nState " + sstack[sstack.length-1] + "\n" +
@@ -904,9 +876,6 @@ var labels = new Array(
 									"..." : "" ) + "\"\n" +
 							"\tStack: " + sstack.join() + "\n" +
 							"\tValue stack: " + vstack.join() + "\n" );
-			
-			if( _dbg_withstepbystep )
-				__dbg_wait();
 		}
 		
 			
@@ -991,18 +960,7 @@ var labels = new Array(
 		
 		//Shift
 		if( act > 0 )
-		{
-			//Parse tree generation
-			if( _dbg_withparsetree )
-			{
-				var node = new treenode();
-				node.sym = labels[ la ];
-				node.att = info.att;
-				node.child = new Array();
-				tree.push( treenodes.length );
-				treenodes.push( node );
-			}
-			
+		{			
 			if( _dbg_withtrace )
 				__dbg_print( "Shifting symbol: " + labels[la] + " (" + info.att + ")" );
 		
@@ -1217,18 +1175,12 @@ switch( act )
 }
 
 
-			
-			if( _dbg_withparsetree )
-				tmptree = new Array();
 
 			if( _dbg_withtrace )
 				__dbg_print( "\tPopping " + pop_tab[act][1] + " off the stack..." );
 				
 			for( var i = 0; i < pop_tab[act][1]; i++ )
 			{
-				if( _dbg_withparsetree )
-					tmptree.push( tree.pop() );
-					
 				sstack.pop();
 				vstack.pop();
 			}
@@ -1243,16 +1195,6 @@ switch( act )
 				}
 			}
 			
-			if( _dbg_withparsetree )
-			{
-				var node = new treenode();
-				node.sym = labels[ pop_tab[act][0] ];
-				node.att = new String();
-				node.child = tmptree.reverse();
-				tree.push( treenodes.length );
-				treenodes.push( node );
-			}
-			
 			if( act == 0 )
 				break;
 				
@@ -1262,46 +1204,23 @@ switch( act )
 			sstack.push( go );
 			vstack.push( rval );			
 		}
+		
+		if( _dbg_withtrace )
+		{		
+			alert( _dbg_string );
+			_dbg_string = new String();
+		}
 	}
 
 	if( _dbg_withtrace )
-		__dbg_print( "\nParse complete." );
-
-	if( _dbg_withparsetree )
 	{
-		if( err_cnt == 0 )
-		{
-			__dbg_print( "\n\n--- Parse tree ---" );
-			__dbg_parsetree( 0, treenodes, tree );
-		}
-		else
-		{
-			__dbg_print( "\n\nParse tree cannot be viewed. There where parse errors." );
-		}
+		__dbg_print( "\nParse complete." );
+		alert( _dbg_string );
 	}
 	
 	return err_cnt;
 }
 
-
-function __dbg_parsetree( indent, nodes, tree )
-{
-	var str = new String();
-	for( var i = 0; i < tree.length; i++ )
-	{
-		str = "";
-		for( var j = indent; j > 0; j-- )
-			str += "\t";
-		
-		str += nodes[ tree[i] ].sym;
-		if( nodes[ tree[i] ].att != "" )
-			str += " >" + nodes[ tree[i] ].att + "<" ;
-			
-		__dbg_print( str );
-		if( nodes[ tree[i] ].child.length > 0 )
-			__dbg_parsetree( indent + 1, nodes, nodes[ tree[i] ].child );
-	}
-}
 
 
 var error_offsets = new Array();
