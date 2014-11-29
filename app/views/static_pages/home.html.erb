@@ -1,88 +1,117 @@
+<h1 id="recipe-title">ehhh</h1>
+<h2>Recipe:</h2>
+<textarea class="recipeBox" id="userInput"=></textarea>
+<button onclick="drawGraph()">Visualise!</button>
 <div id="graph-container">
+
 </div>
+
+<!-- add this line for function to write into -->
+<p id="demo"></p>
 <script>
-    sigma.canvas.edges.t = function(edge, source, target, context, settings) {
-        var color = edge.color,
-            prefix = settings('prefix') || '',
-            edgeColor = settings('edgeColor'),
-            defaultNodeColor = settings('defaultNodeColor'),
-            defaultEdgeColor = settings('defaultEdgeColor');
-
-        context.strokeStyle = source.color;
-        context.lineWidth = 9;
-        context.beginPath();
-        context.moveTo(
-            source[prefix + 'x'],
-            source[prefix + 'y']
-        );
-        context.lineTo(
-            target[prefix + 'x'],
-            source[prefix + 'y']
-        );
-        context.lineTo(
-            target[prefix + 'x'],
-            target[prefix + 'y']
-        );
-        context.stroke();
-    };
-
-    sigma.canvas.labels.square = function(node, context, settings) {
-        var prefix = settings('prefix') || '',
-            size = node[prefix + 'size'],
-            nodeX = node[prefix + 'x'],
-            nodeY = node[prefix + 'y'],
-            textWidth;
-
-        context.fillStyle = "black";
-        context.lineWidth = size;
-        context.textAlign = 'center';
-        context.fillText(node.label, nodeX, nodeY-15); // TODO: Add more fillText lines with constraints
-        textWidth = context.measureText(node.label).width
-        node.labelWidth = textWidth; 
-    };
-
-
-    sigma.canvas.nodes.square = function(node, context, settings) {
-        var prefix = settings('prefix') || '',
-            size = node[prefix + 'size'];
-
-        context.fillStyle = node.color || settings('defaultNodeColor');
-        context.beginPath();
-        context.rect(
-            node[prefix + 'x'] - size,
-            node[prefix + 'y'] - size,
-            size * 2,
-            size * 2
-        );
-
-        context.closePath();
-        context.fill();
-    };
 
     // TODO: Add more colours here
     colors = [
         "#6E92A1",
-        "#FFBAAA", 
+        "#FFBAAA",
         "#FFE7AA",
         "#D4B66A",
         "#D4A26A",
         "#7AB793"
     ];
 
-    var json = buildSigmaGraph(nuskhaExpr1);
-    s = new sigma({
-        graph: json,
-        container: 'graph-container',
-        renderer: {
-            container: document.getElementById('graph-container'),
-            type: 'canvas'
-        },
-        settings: {
-            edgeColor: 'default',
-            defaultNodeColor: '#27566B',
-        }
-    });
 
-    //s.startForceAtlas2();
-    s.start
+    function drawGraph() {
+        // Clear the page
+        document.getElementById("graph-container").innerHTML = "";
+        document.getElementById("recipe-title").innerHTML = "";
+
+        // Get recipe from the box
+        var userInput = document.getElementById("userInput").value;
+
+        // Parse
+        var result = parse(userInput); // 
+
+        // Interpret
+        if (result != null) {
+            var json = buildSigmaGraph(result);
+            sigma.canvas.edges.t = function(edge, source, target, context, settings) {
+                var color = edge.color,
+                    prefix = settings('prefix') || '',
+                    edgeColor = settings('edgeColor'),
+                    defaultNodeColor = settings('defaultNodeColor'),
+                    defaultEdgeColor = settings('defaultEdgeColor');
+
+                context.strokeStyle = source.color;
+                context.lineWidth = 9;
+                context.beginPath();
+                context.moveTo(
+                    source[prefix + 'x'],
+                    source[prefix + 'y']
+                );
+                context.lineTo(
+                    target[prefix + 'x'],
+                    source[prefix + 'y']
+                );
+                context.lineTo(
+                    target[prefix + 'x'],
+                    target[prefix + 'y']
+                );
+                context.stroke();
+            };
+
+            sigma.canvas.labels.square = function(node, context, settings) {
+                var prefix = settings('prefix') || '',
+                    size = node[prefix + 'size'],
+                    nodeX = node[prefix + 'x'],
+                    nodeY = node[prefix + 'y'],
+                    textWidth;
+
+                context.fillStyle = "black";
+                context.lineWidth = size;
+                context.textAlign = 'center';
+                context.fillText(node.label, nodeX, nodeY - 15); // TODO: Add more fillText lines with constraints
+                textWidth = context.measureText(node.label).width
+                node.labelWidth = textWidth;
+            };
+
+
+            sigma.canvas.nodes.square = function(node, context, settings) {
+                var prefix = settings('prefix') || '',
+                    size = node[prefix + 'size'];
+
+                context.fillStyle = node.color || settings('defaultNodeColor');
+                context.beginPath();
+                context.rect(
+                    node[prefix + 'x'] - size,
+                    node[prefix + 'y'] - size,
+                    size * 2,
+                    size * 2
+                );
+                context.closePath();
+                context.fill();
+            };
+
+            document.getElementById("recipe-title").innerHTML = result["recipe"]["title"];
+
+            s = new sigma({
+                graph: json,
+                container: 'graph-container',
+                renderer: {
+                    container: document.getElementById('graph-container'),
+                    type: 'canvas'
+                },
+                settings: {
+                    edgeColor: 'default',
+                    defaultNodeColor: '#27566B',
+                }
+            });
+
+            //s.startForceAtlas2();
+            s.start
+        } else {
+            document.getElementById("recipe-title").innerHTML = "The recipe you entered is invalid.";
+        }
+
+    }
 </script>
