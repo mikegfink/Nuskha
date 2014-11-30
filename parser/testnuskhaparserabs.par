@@ -53,12 +53,19 @@ function setNuskha(obj)
     'INGREDIENTS:'
     'DO:'
     'with'
-    'on'
+    'onto'
     'to'
     'until'
     'tsp'
     'tbsp'
     'cup'
+    'L'
+    'mL'
+    'g'
+    'oz'
+    'pt'
+    'qt'
+    'gal'
     'from'
     'for'
     'into'
@@ -100,6 +107,13 @@ ingr:           NUMBER ing   [* %% = [%2, {"amount": %1.toString()}]; *]
 measurement:    'tsp'
                 | 'tbsp'
                 | 'cup'
+                | 'L'
+                | 'mL'
+                | 'g'
+                | 'oz'
+                | 'pt'
+                | 'qt'
+                | 'gal'
                 ;
 
 steps:          steps ';' steps         [* %% = %1.concat(%3); *]
@@ -116,11 +130,11 @@ action:         STRING item                [* %% = [%1, %2]; *]
                 ;
 
 modifier:       modifier modifier      [* %% = %1.concat(%2); *]
-                | 'with' STRING       [* %% = [{"utensil": %2}]; *]
-                | 'on' STRING       [* %% = [{"location": %2}]; *]
-                | 'until' STRING    [* %% = [{"fulfill": %2}]; *]
+                | 'with' ing       [* %% = [{"utensil": %2}]; *]
+                | 'onto' ing       [* %% = [{"location": %2}]; *]
+                | 'until' ing    [* %% = [{"fulfill": %2}]; *]
                 | 'for' time        [* %% = [{"duration": %2}]; *]
-                | 'into' STRING     [* %% = [{"shape": %2}]; *]
+                | 'into' ing     [* %% = [{"shape": %2}]; *]
                 | 'at' temp         [* %% = [{"temp": %2}]; *]
                 | '(' ing ')'       [* %% = [{"instruction": %2}]; *]
                 ;
