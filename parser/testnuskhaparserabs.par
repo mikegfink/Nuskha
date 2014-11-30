@@ -53,7 +53,7 @@ function setNuskha(obj)
     'INGREDIENTS:'
     'DO:'
     'with'
-    'onto'
+    'on'
     'to'
     'until'
     'tsp'
@@ -131,7 +131,7 @@ action:         STRING item                [* %% = [%1, %2]; *]
 
 modifier:       modifier modifier      [* %% = %1.concat(%2); *]
                 | 'with' ing       [* %% = [{"utensil": %2}]; *]
-                | 'onto' ing       [* %% = [{"location": %2}]; *]
+                | 'on' ing       [* %% = [{"location": %2}]; *]
                 | 'until' ing    [* %% = [{"fulfill": %2}]; *]
                 | 'for' time        [* %% = [{"duration": %2}]; *]
                 | 'into' ing     [* %% = [{"shape": %2}]; *]
