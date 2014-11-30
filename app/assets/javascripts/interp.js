@@ -1,7 +1,7 @@
 // Stub
 
 function buildSigmaGraph(nuskhaExpression) {
-    // This is basically the slope. Change to 1, or even fractional values if needed, 
+    // This is basically the slope. Change to 1, or even 'fractional' values if needed, 
     // to make space for constraints
     var XYRATIO = 2;
 
@@ -12,6 +12,7 @@ function buildSigmaGraph(nuskhaExpression) {
     var nextEdgeId = 0;
     var Y = 0;
     var yCoordinates = {};
+    var colorMap = {};
 
     for (var i = 0; i < nuskhaGraph.length; i++) {
 
@@ -33,7 +34,7 @@ function buildSigmaGraph(nuskhaExpression) {
 
         // Building time(0) ingredient nodes
         if (node.time < 1) {
-            nodeArray.push({
+            var sigmaNode = {
                 id: node.id.toString(),
                 label: node.label,
                 x: 0,
@@ -41,21 +42,34 @@ function buildSigmaGraph(nuskhaExpression) {
                 size: 5,
                 color: colors[Math.floor(Math.random() * colors.length)],
                 type: "circle"
-            });
+            }
+            nodeArray.push(sigmaNode);
             yCoordinates[node.id] = Y;
+            colorMap[node.id] = sigmaNode["color"];
             Y++;
         // Building time(> 0) action nodes
         } else {
-            nodeArray.push({
+            
+            var nextColor;
+            
+            if (node.ingr.length === 1) {
+                nextColor = colorMap[node.ingr[0]];
+            } else {
+                nextColor = colors[Math.floor(Math.random() * colors.length)];
+            } 
+            var sigmaNode = {
                 id: node.id.toString(),
                 label: node.label,
                 x: node.time*XYRATIO,    
                 y: yCoordinates[node.ingr[0]],
                 size: 5,
-                color: colors[Math.floor(Math.random() * colors.length)],
+                color: nextColor,
                 type: "square"
-            });
+            }
+
+            nodeArray.push(sigmaNode);
             yCoordinates[node.id] = yCoordinates[node.ingr[0]];
+            colorMap[node.id] = sigmaNode["color"];
         }
     }
 
