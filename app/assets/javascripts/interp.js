@@ -6,13 +6,18 @@ function buildSigmaGraph(nuskhaExpression) {
     var XYRATIO = 1;
 
     var nuskhaGraph = nuskhaExpression["graph"];
+    
     var sigmaJSON = {};
     var nodeArray = [];
     var edgeArray = [];
+
     var nextEdgeId = 0;
-    var Y = 0;
-    var yCoordinates = {};
+    var nextY = 0;
+    var yCoordinateMap = {};
+    var nextColorIndex = 0;
     var colorMap = {};
+    
+    colors = shuffleArray(colors); //long live mutation
 
     for (var i = 0; i < nuskhaGraph.length; i++) {
 
@@ -26,49 +31,51 @@ function buildSigmaGraph(nuskhaExpression) {
                 label: 'Edge ' + j,
                 target: node.id.toString(),
                 source: ingredient.toString(),
-                color: colors[Math.floor(Math.random() * colors.length)],
                 type: "t",
             });
             nextEdgeId++;
         }
 
         // Building time(0) ingredient nodes
-        if (node.time < 1) {
+        if (node.time === 0) {
             var sigmaNode = {
                 id: node.id.toString(),
                 label: node.label,
                 x: 0,
-                y: Y,
+                y: nextY,
                 size: 5,
-                color: colors[Math.floor(Math.random() * colors.length)],
+                color: colors[nextColorIndex],
                 type: "circle"
             }
             nodeArray.push(sigmaNode);
-            yCoordinates[node.id] = Y;
+            yCoordinateMap[node.id] = nextY;
             colorMap[node.id] = sigmaNode["color"];
-            Y++;
+            nextY++;
+            nextColorIndex++;
+
         // Building time(> 0) action nodes
         } else {
-            
+            // If a node has a single ingredient, then inherit itss color
             var nextColor;
-            
             if (node.ingr.length === 1) {
                 nextColor = colorMap[node.ingr[0]];
             } else {
-                nextColor = colors[Math.floor(Math.random() * colors.length)];
-            } 
+                nextColor = colors[nextColorIndex];
+                nextColorIndex++;
+            }
+
             var sigmaNode = {
                 id: node.id.toString(),
                 label: node.label,
                 x: node.time*XYRATIO,    
-                y: yCoordinates[node.ingr[0]],
+                y: yCoordinateMap[node.ingr[0]],
                 size: 5,
                 color: nextColor,
                 type: "square"
             }
 
             nodeArray.push(sigmaNode);
-            yCoordinates[node.id] = yCoordinates[node.ingr[0]];
+            yCoordinateMap[node.id] = yCoordinateMap[node.ingr[0]];
             colorMap[node.id] = sigmaNode["color"];
         }
     }
@@ -77,4 +84,15 @@ function buildSigmaGraph(nuskhaExpression) {
     sigmaJSON["edges"] = edgeArray;
 
     return sigmaJSON;
+}
+
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random()*(i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+        return array;
 }
