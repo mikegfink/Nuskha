@@ -3,7 +3,7 @@
 function buildSigmaGraph(nuskhaExpression) {
     // This is basically the slope. Change to 1, or even 'fractional' values if needed, 
     // to make space for constraints
-    var XYRATIO = 2;
+    var XYRATIO = 1;
 
     var nuskhaGraph = nuskhaExpression["graph"];
     var sigmaJSON = {};
