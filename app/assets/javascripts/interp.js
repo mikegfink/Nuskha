@@ -1,4 +1,3 @@
-// Stub
 
 function buildSigmaGraph(nuskhaExpression) {
     // This is basically the slope. Change to 1, or even 'fractional' values if needed, 
@@ -37,15 +36,17 @@ function buildSigmaGraph(nuskhaExpression) {
         }
 
         // Building time(0) ingredient nodes
+        
         if (node.time === 0) {
             var sigmaNode = {
                 id: node.id.toString(),
                 label: node.label,
+                constraints: concatenateConstraints(node.constraints),
                 x: 0,
                 y: nextY,
                 size: 5,
                 color: colors[nextColorIndex],
-                type: "circle"
+                type: "square"
             }
             nodeArray.push(sigmaNode);
             yCoordinateMap[node.id] = nextY;
@@ -55,7 +56,7 @@ function buildSigmaGraph(nuskhaExpression) {
 
         // Building time(> 0) action nodes
         } else {
-            // If a node has a single ingredient, then inherit itss color
+            // If a node has a single ingredient, then inherit its color
             var nextColor;
             if (node.ingr.length === 1) {
                 nextColor = colorMap[node.ingr[0]];
@@ -67,6 +68,7 @@ function buildSigmaGraph(nuskhaExpression) {
             var sigmaNode = {
                 id: node.id.toString(),
                 label: node.label,
+                constraints: concatenateConstraints(node.constraints),
                 x: node.time*XYRATIO,    
                 y: yCoordinateMap[node.ingr[0]],
                 size: 5,
@@ -95,4 +97,16 @@ function shuffleArray(array) {
         array[j] = temp;
     }
         return array;
+}
+
+function concatenateConstraints(consArray) {
+    var consString = "";
+
+    if (consArray != null) {
+        var constraints = consArray[0];
+        for (var name in constraints) {
+            consString += (" "+ name + ": " + constraints[name]);
+        }    
+    }
+    return consString;    
 }

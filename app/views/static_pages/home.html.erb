@@ -1,24 +1,22 @@
-
-
 <div class="row">
     <div class="col-lg-4">
         <div class="well bs-component">
         <form class="form-horizontal">
-  <fieldset>
-    <div class="form-group">
-      <label for="textArea" class="col-lg-2 control-label">Recipe</label>
-      <div class="col-lg-10">
-        <textarea class="form-control" rows="10" id="textArea">Eggplant Rougail = INGREDIENTS: 2 eggplants, 2 white onions, 2 hot peppers, 4 tsp oil, salt and pepper ; DO: 1. boil eggplants until soft; 2. scoop flesh from 1; 3. discard skin from 2; 4. mash 3; 5. mince white onions; 6. mince hot peppers; 7. mix 5, 6, 4; 8. add oil to 7; 9. add salt and pepper to 8; 10. serve 9</textarea>
-        <span class="help-block">Syntax errors displayed here maybe?</span>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <input type="btn" onclick="drawGraph()" class="btn btn-warning" value="Visualize!">
-      </div>
-    </div>
-  </fieldset>
-</form>
+          <fieldset>
+            <div class="form-group">
+              <label for="textArea" class="col-lg-2 control-label">Recipe</label>
+              <div class="col-lg-10">
+                <textarea class="form-control" rows="10" id="textArea">Eggplant Rougail = INGREDIENTS: 2 eggplants, 2 white onions, 2 hot peppers, 4 tsp oil, salt and pepper ; DO: 1. boil eggplants until soft; 2. scoop flesh from 1; 3. discard skin from 2; 4. mash 3; 5. mince white onions; 6. mince hot peppers; 7. mix 5, 6, 4; 8. add oil to 7; 9. add salt and pepper to 8; 10. serve 9</textarea>
+                <span class="help-block">Syntax errors displayed here maybe?</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <input type="btn" onclick="drawGraph()" class="btn btn-warning" value="Visualize!">
+              </div>
+            </div>
+          </fieldset>
+        </form>
         </div>
     </div>
     <div class="col-lg-8">
@@ -91,8 +89,10 @@
                 context.fillStyle = "black";
                 context.lineWidth = size;
                 context.textAlign = 'center';
+                context.font = '12px Helvetica';
                 context.fillText(node.label, nodeX, nodeY - 15); // TODO: Add more fillText lines with constraints
-                textWidth = context.measureText(node.label).width
+                context.fillText(node.constraints, nodeX, nodeY + 22);
+                textWidth = context.measureText(node.label).width;
                 node.labelWidth = textWidth;
             };
 
@@ -125,6 +125,7 @@
                 settings: {
                     edgeColor: 'default',
                     defaultNodeColor: '#27566B',
+                    sideMargin: 0.5
                 }
             });
 
