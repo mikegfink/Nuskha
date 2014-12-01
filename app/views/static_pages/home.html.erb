@@ -90,7 +90,7 @@
                 context.lineWidth = size;
                 context.textAlign = 'center';
                 context.font = '12px Helvetica';
-                context.fillText(node.label, nodeX, nodeY - 15); // TODO: Add more fillText lines with constraints
+                context.fillText(node.label, nodeX, nodeY - 15); 
                 context.fillText(node.constraints, nodeX, nodeY + 22);
                 textWidth = context.measureText(node.label).width;
                 node.labelWidth = textWidth;
