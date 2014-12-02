@@ -2,7 +2,7 @@
 function buildSigmaGraph(nuskhaExpression) {
     // This is basically the slope. Change to 1, or even 'fractional' values if needed, 
     // to make space for constraints
-    var XYRATIO = 1;
+    var XYRATIO = 1.5;
 
     var nuskhaGraph = nuskhaExpression["graph"];
     
@@ -99,12 +99,12 @@ function shuffleArray(array) {
 }
 
 function concatenateConstraints(consArray) {
-    var consString = "";
+    var consString = [];
     if (consArray != null) {
         for (var i = 0; i < consArray.length; i++) {
             var constraints = consArray[i];
             for (var name in constraints) {
-                consString += (" "+ name + "-> " + constraints[name]);
+                consString.push(constraints[name]);
             }
         }    
     }

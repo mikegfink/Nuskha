@@ -19,8 +19,8 @@
         </form>
         </div>
     </div>
-    <div class="col-lg-8">
-        <div id="graph-container" style="height: 370px"> <!-- TODO: don't hardcode height -->
+    <div class="col-lg-8" >
+        <div id="graph-container" style="height: 400px"> <!-- TODO: don't hardcode height -->
         </div>
     </div>
 </div>
@@ -37,7 +37,7 @@
         "#7AB793",
         "#FF847D",
         "#FFB06B",
-        "#75caeb"
+        "#75caeb",
     ];
 
     function drawGraph() {
@@ -91,7 +91,12 @@
                 context.textAlign = 'center';
                 context.font = '12px Helvetica';
                 context.fillText(node.label, nodeX, nodeY - 15); 
-                context.fillText(node.constraints, nodeX, nodeY + 22);
+                context.font = '8px Helvetica';
+                var constraintY = nodeY + 16;
+                for (var i = 0; i < node.constraints.length; i++) {
+                    context.fillText(node.constraints[i], nodeX, constraintY)
+                    constraintY+= 10;
+                };
                 textWidth = context.measureText(node.label).width;
                 node.labelWidth = textWidth;
             };
